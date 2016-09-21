@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<!-- plugin.xml file written by dynaTrace Client 5.6.0 -->
+<plugin>
+  <extension point="com.dynatrace.diagnostics.pdk.pluginconfig" id="com.dynatrace.diagnostics.plugins.jmx.tibcobw" name="TIBCO BW Monitoring">
+    <information>
+      <category value="" />
+      <displayname value="TIBCO BW Monitoring" />
+      <description value="TIBCO BW Monitoring&#xA;getStatus, GetProcessCount, GetMemoryUsage, GetExecInfo, GetActiveProcessCount, ListDbConnections and GetProcessDefinitions. Also monitors all JVM metrics.&#xA;--Monitoring TIBCO BusinessWorks engine using the JMX API is possible only for &#xA;projects deployed on TIBCO Administrator. &#xA;To enable JMX monitoring for the BusinessWorks engine, set the following property in &#xA;&#xA;bwengine.tra&#xA;&#xA;Jmx.Enabled=true&#xA;&#xA;To enable remote monitoring using JM&#xA;X, set the following properties in &#xA;&#xA;bwengine.tra&#xA;&#xA;java.property.com.sun.management.jmxremote=true&#xA;java.property.com.sun.management.jmxremote.port=&#xA;&lt;port_number&gt;&#xA;where &#xA;&lt;port_number&gt; &#xA;can be any available port.&#xA;&#xA;java.property.com.sun.management.jmxremote.authenticate=false&#xA;java.property.com.sun.management.jmxremote.ssl=false&#xA;" />
+      <supportlevel value="unsupported" />
+    </information>
+    <configuration>
+      <property key="environment" label="Environment" type="string" description="What environment does this JVM belong to?" default="default" multiline="false" />
+      <property key="serverName" label="Instance Name" type="string" description="This is used for errors connecting to the BW server. It is also used to record the data to the DT DB. Should relate to the process being monitored." default="default" multiline="false" />
+      <property key="dtServer" label="JVM Server:Port" type="string" description="Enter the server and port &lt;server&gt;:&lt;port&gt;&#xD;&#xA;&#xD;&#xA;It needs to be in this format." default="" multiline="false" />
+      <property key="jmxPassword" label="Password" type="password" description="Enter the password. If there is no password, put a - in for the password. Value should be recorded as user:password" default="-" />
+      <property key="tibMonitor" label="Monitor Tibco" type="boolean" description="Do you want to monitor TIBCO BW" default="true" />
+      <property key="ignoreProcess" label="Ignore Process Definition" type="string" description="Tibco Monitor - List the processes you do not want to monitor. We will validate the process does not get monitored with the GetProcessDefinitions operation. List names 1 per line.&#xA;&#xA;We are going to match it by equalsIgnoreCase or contains." default="default" multiline="true" />
+      <property key="jvmMonitor" label="JVM Monitor" type="boolean" description="Do you want to monitor the JVM" default="true" />
+      <property key="mBeans" label="MBeans" type="string" description="JVM Monitor - What Mbeans do you want to monitor? 1 MBean per line." default="java.lang:type=Memory&#xD;&#xA;GarbageCollector&#xD;&#xA;java.lang:type=OperatingSystem&#xD;&#xA;java.lang:type=Runtime&#xD;&#xA;java.lang:type=Threading" multiline="true" />
+      <property key="attributes" label="Attributes" type="string" description="JVM Monitor - List the Attributes you want to monitor. 1 Attribute per line." default="CollectionCount&#xD;&#xA;HeapMemoryUsage&#xD;&#xA;CollectionTime&#xD;&#xA;MaxHeapSizeLimit&#xD;&#xA;DaemonThreadCount&#xD;&#xA;ThreadCount&#xD;&#xA;TotalSwapSpaceSize&#xD;&#xA;FreeSwapSpaceSize&#xD;&#xA;AvailableProcessors&#xD;&#xA;TotalCompacts&#xD;&#xA;ProcessingCapacity&#xD;&#xA;SystemLoadAverage&#xD;&#xA;ProcessCpuTime&#xD;&#xA;ProcessCpuTimeByNS&#xD;&#xA;Uptime" multiline="true" />
+    </configuration>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitor" id="com.dynatrace.diagnostics.plugins.jmx.tibcobw.monitor" name="TIBCO BW Monitor">
+    <plugin configid="com.dynatrace.diagnostics.plugins.jmx.tibcobw" class="com.dynatrace.diagnostics.plugins.jmx.JvmMonitoring" />
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.diagnostics.plugins.jmx.tibcobw.metricgroup1" name="JVM Monitor Group">
+    <metricgroup monitorid="com.dynatrace.diagnostics.plugins.jmx.tibcobw.monitor">
+      <metric defaultrate="purepath" name="JVM DATA" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Old Collection Time" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Old Collection Count" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Heap Memory Used" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Heap Memory Max" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Heap Memory Committed" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Heap Memory Init" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="NonHeap Memory Used" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="NonHeap Memory Max" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="NonHeap Memory Committed" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="NonHeap Memory Init" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Max Heap Size" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Old Total Compacts" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Peak Thread Count" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Total Started ThreadCount" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Thread Count" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Daemon Thread Count" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Process Cpu Time" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="System Load Average" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Processing Capacity" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Process Cpu Time By NS" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Available Processors" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Young Collection Time" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Young Collection Count" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Young Total Compacts" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Young Time In GC" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Old Time In GC" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Free Swap Space Size" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="Total Swap Space Size" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="JVM Uptime" unit="number" description="How long the JVM has been running (Minutes)." />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.diagnostics.plugins.jmx.tibcobw.metricgroup2" name="JVM Connection Group">
+    <metricgroup monitorid="com.dynatrace.diagnostics.plugins.jmx.tibcobw.monitor">
+      <metric defaultrate="purepath" name="JVM Connection Status" unit="number" description="My metric description ..." />
+      <metric defaultrate="purepath" name="JVM Monitor Time" unit="number" description="My metric description ..." />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.diagnostics.plugins.jmx.tibcobwmetricgroup3" name="TIBCO Webservice Group">
+    <metricgroup monitorid="com.dynatrace.diagnostics.plugins.jmx.tibcobw.monitor">
+      <metric defaultrate="purepath" name="Aborted" unit="number" description="Aborted - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Average Elapsed" unit="number" description="AverageElapsed - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Average Execution" unit="number" description="AverageExecution - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Checkpointed" unit="number" description="Checkpointed - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Completed" unit="number" description="Completed - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Count Since Reset" unit="number" description="CountSinceReset - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Created" unit="number" description="Created - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Max Elapsed" unit="number" description="MaxElapsed - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Max Execution" unit="number" description="MaxExecution - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Min Elapsed" unit="number" description="MinElapsed - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Min Execution" unit="number" description="MinExecution - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Most Recent Elapsed Time" unit="number" description="MostRecentElapsedTime - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Most Recent Execution Time" unit="number" description="MostRecentExecutionTime - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Queued" unit="number" description="Queued - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Suspended" unit="number" description="Suspended - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Swapped" unit="number" description="Swapped - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Time Since Last Update" unit="number" description="TimeSinceLastUpdate - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Total Elapsed" unit="number" description="TotalElapsed - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Total Execution" unit="number" description="TotalExecution - GetProcessDefinitions" />
+      <metric defaultrate="purepath" name="Executions" unit="number" description="Number of executions between monitoring cycles. Difference between first and second monitoring check for Total Execution." />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.diagnostics.plugins.jmx.tibcobw.metricgroup4" name="TIBCO Process Group">
+    <metricgroup monitorid="com.dynatrace.diagnostics.plugins.jmx.tibcobw.monitor">
+      <metric defaultrate="purepath" name="Active Process Count" unit="number" description="GetActiveProcessCount" />
+      <metric defaultrate="purepath" name="Process Count" unit="number" description="GetProcessCount" />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.diagnostics.plugins.jmx.tibcobw.metricgroup5" name="TIBCO Status Group">
+    <metricgroup monitorid="com.dynatrace.diagnostics.plugins.jmx.tibcobw.monitor">
+      <metric defaultrate="purepath" name="New Errors" unit="number" description="New Errors - getStatus" />
+      <metric defaultrate="purepath" name="Process ID" unit="number" description="Process ID - getStatus" />
+      <metric defaultrate="purepath" name="Total Errors" unit="number" description="Total Errors - getStatus" />
+      <metric defaultrate="purepath" name="Status Uptime" unit="number" description="Status Uptime - getStatus" />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.diagnostics.plugins.jmx.tibcobw.metricgroup6" name="TIBCO ExecInfo Group">
+    <metricgroup monitorid="com.dynatrace.diagnostics.plugins.jmx.tibcobw.monitor">
+      <metric defaultrate="purepath" name="ExecInfo Status" unit="number" description="ExecInfo Status - GetExecInfo" />
+      <metric defaultrate="purepath" name="Threads" unit="number" description="Threads - GetExecInfo" />
+      <metric defaultrate="purepath" name="ExecInfo Uptime" unit="number" description="ExecInfo Uptime - GetExecInfo" />
+      <metric defaultrate="purepath" name="Version" unit="number" description="Version - GetExecInfo" />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.diagnostics.plugins.jmx.tibcobw.metricgroup7" name="TIBCO MemoryInfo Group">
+    <metricgroup monitorid="com.dynatrace.diagnostics.plugins.jmx.tibcobw.monitor">
+      <metric defaultrate="purepath" name="Free Bytes" unit="number" description="Free Bytes - GetMemoryUsage" />
+      <metric defaultrate="purepath" name="Percent Used" unit="number" description="Percent Used - GetMemoryUsage" />
+      <metric defaultrate="purepath" name="Total Bytes" unit="number" description="Total Bytes - GetMemoryUsage" />
+      <metric defaultrate="purepath" name="Used Bytes" unit="number" description="Used Bytes - GetMemoryUsage" />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.diagnostics.plugins.jmx.tibcobw.metricgroup8" name="TIBCO DB Group">
+    <metricgroup monitorid="com.dynatrace.diagnostics.plugins.jmx.tibcobw.monitor">
+      <metric defaultrate="purepath" name="Connection State" unit="number" description="Active = 0&#xA;Idle = 1" />
+      <metric defaultrate="purepath" name="Idle Time" unit="number" description="Idle Time - time the connection has been Idle" />
+    </metricgroup>
+  </extension>
+</plugin>
+
